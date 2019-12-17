@@ -1,5 +1,8 @@
 # kubeadmLearnings
+### References: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+
 ### My experience with setting up Kubenetes multi node setup with kubeadm on GCP Compute Engine VMs.
+
 
 ### Each GCP Compute Engine VMs must have at least 2 CPUS and 2GB RAM.
 ### At the time of performing the setup, I chose Ubuntu 19.04 briefly known as "Disco Dingo" as OS for the VMs since this is the latest OS version which was supported by Docker, like for eg, Ubunto 19.10 stable APT resource was not available for Docker.
