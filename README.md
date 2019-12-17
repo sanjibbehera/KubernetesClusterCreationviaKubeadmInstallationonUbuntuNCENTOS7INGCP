@@ -14,13 +14,13 @@ gcloud beta compute --project "ace-daylight-256904" ssh --zone "asia-south1-c" "
 gcloud beta compute --project "ace-daylight-256904" ssh --zone "asia-south1-c" "kubenode1"  
 gcloud beta compute --project "ace-daylight-256904" ssh --zone "asia-south1-c" "kubenode2"
 
-#### Switch the iptables tooling to 'legacy' mode, as I am using Ubuntu 19.04, need to switch to legacy mode.
+#### Switch the iptables tooling to 'legacy' mode, as I am using Ubuntu 19.04, need to switch to legacy mode in all 3 VMs.
 sudo update-alternatives --set iptables /usr/sbin/iptables-legacy  
 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy  
 sudo update-alternatives --set arptables /usr/sbin/arptables-legacy  
 sudo update-alternatives --set ebtables /usr/sbin/ebtables-legacy
 
-#### Installing Docker on Ubuntu...
+#### Installing Docker on Ubuntu on these 3 VMs...
 sudo apt install apt-transport-https ca-certificates curl software-properties-common  
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -  
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu <b>disco,</b> stable"  
@@ -29,7 +29,7 @@ apt-cache policy docker-ce
 sudo apt install docker-ce  
 sudo systemctl status docker
 
-#### Installing kubeadm, kubelet and kubectl.
+#### Installing kubeadm, kubelet and kubectl on these 3 VMs.
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl  
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -  
 cat <<EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -43,7 +43,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 swapoff -a  
 kubeadm reset  
 kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml  
-kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=[kubeadmin host static ip]  
+kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=[kubeadmin host static ip], copy the join syntax required for worker nodes.  
 systemctl status kubelet  
 ###### For NON-ROOT Users.
 mkdir -p $HOME/.kube
@@ -53,7 +53,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ###### for ROOT user:-
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
-##### Adapt Docker config and restart.
+##### Adapt Docker config and restart in all 3 VMs.
 cat > /etc/docker/daemon.json <<EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
