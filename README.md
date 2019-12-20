@@ -49,8 +49,8 @@ kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml
 kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=[kubeadmin host static ip], copy the join syntax required for worker nodes.  
 systemctl status kubelet  
 ###### For NON-ROOT Users.
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+mkdir -p $HOME/.kube  
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ###### for ROOT user:-
