@@ -42,18 +42,21 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl  
 sudo apt-mark hold kubelet kubeadm kubectl
 
-#### Installing a pod network add-on
+#### Initializing the Master Node in Kubernetes Cluster.
+kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=[kubeadmin host static ip], copy the join syntax required for worker nodes.
+
+#### Installing a pod network add-on on Master Node.
 swapoff -a  
 kubeadm reset  
-kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml  
-kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=[kubeadmin host static ip], copy the join syntax required for worker nodes.  
-systemctl status kubelet  
-###### For NON-ROOT Users.
+kubectl apply -f https://docs.projectcalico.org/v3.8/manifests/calico.yaml   
+systemctl status kubelet
+
+###### For NON-ROOT Users, apply the config in the Master node.
 mkdir -p $HOME/.kube  
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-###### for ROOT user:-
+###### for ROOT user, apply the config in the Master node.:-
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
 ##### Adapt Docker config and restart in all 3 VMs.
