@@ -1,4 +1,4 @@
-# kubeadmLearnings
+# kubeadmSetupInstallationLearningsWithUbuntu
 ### References: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 
 ### My experience with setting up Kubenetes multi node setup with kubeadm on GCP Compute Engine VMs.
